@@ -51,8 +51,15 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-        echo "Adding group jail GID=29."
-        /usr/sbin/groupadd -g 29 jail
+if [ -n "`getgid jail`" ]; then
+        if [ "`getgid jail`" != "35" ]; then
+                echo "Error: group named doesn't have gid=35. Correct this before installing bind." 1>&2
+                exit 1
+        fi
+else
+
+        echo "Adding group jail GID=35."
+        /usr/sbin/groupadd -g 35 jail
 
 %postun
 if [ "$1" = "0" ]; then
