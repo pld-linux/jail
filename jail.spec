@@ -2,12 +2,13 @@ Summary:	Tool that builds a chrooted environment
 Summary(pl):	Narzêdzie tworz±ce ¶rodowisko w chroocie
 Name:		jail
 Version:	1.9a
-Release:	0.2
+Release:	1
 License:	GPL
 Group:		Applications/Communications
 Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.tar.gz
 # Source0-md5:	06824a1255ce3da1bb86cb806bf15535
 Patch0:		%{name}-install.patch
+Requires(pre):  /usr/sbin/groupadd
 URL:		http://www.jmcresearch.com/projects/jail/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,9 +49,14 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%pre
+        echo "Adding group jail GID=29."
+        /usr/sbin/groupadd -g 29 jail || exit 1
+
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG README TODO
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/[!j]*
+%attr(4750,root,jail) %{_bindir}/jail
 %{_libdir}/jail
 %attr(640,root,root) %verify(not size md5 mtime) %config(noreplace) %{_sysconfdir}/jail.conf
