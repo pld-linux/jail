@@ -1,0 +1,24 @@
+--- jail/Makefile.orig  2004-05-15 12:25:18.565211864 +0000
++++ jail/Makefile       2004-05-15 12:25:31.186293168 +0000
+@@ -32,7 +32,7 @@
+ #
+ #
+
+-INSTALL_DIR=/usr/local/bin
++INSTALL_DIR=/usr/bin
+ CC = gcc
+ CFLAGS = -Wall
+ DEBUG = -g
+
+--- jail/src/Makefile.orig 2004-05-15 12:28:07.744492704 +0000
++++ jail/src/Makefile   2004-05-15 12:28:25.109852768 +0000
+@@ -28,7 +28,7 @@
+ #ARCH=__SOLARIS__
+
+ DEBUG = 0
+-INSTALL_DIR = /usr/local
++INSTALL_DIR = /usr/
+ PERL = /usr/bin/perl
+ ROOTUSER = root
+ ROOTGROUP = root
+
