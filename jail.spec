@@ -1,4 +1,5 @@
-Summary:	Tool that builds a chrooted environment.
+Summary:	Tool that builds a chrooted environment
+Summary(pl):	Narzêdzie tworz±ce ¶rodowisko w chroocie
 Name:		jail
 Version:	1.9a
 Release:	0.2
@@ -18,30 +19,31 @@ chrooted environment is to set up the right libraries and files. Here,
 Jail comes to the rescue with a tool to automagically configures &
 builds all the required files, directories and libraries.
 
+%description -l pl
+Jail Chroot Project to próba napisania narzêdzia tworz±cego ¶rodowisko
+w chroocie. G³ównym celem Jaila jest bycie tak prostym jak to tylko
+mo¿liwe, a przy tym bardzo przeno¶nym. Najtrudniejszym krokiem przy
+tworzeniu ¶rodowiska w chroocie jest w³a¶ciwe dobranie bibliotek i
+plików. Tutaj z pomoc± przychodzi Jail z narzêdziem automatycznie
+konfiguruj±cym i tworz±cym wszystkie wymagane pliki, katalogi i
+biblioteki.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
 
 %build
-
-cd src
-
-%{__make} \
+%{__make} -C src \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
-cd -
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cd src
-
-%{__make} install \
+%{__make} -C src install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
 	SYSCONFDIR=%{_sysconfdir}
-
-cd -
 
 %clean
 rm -rf $RPM_BUILD_ROOT
