@@ -9,6 +9,7 @@ Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.
 # Source0-md5:	06824a1255ce3da1bb86cb806bf15535
 Patch0:		%{name}-install.patch
 Requires(pre):  /usr/sbin/groupadd
+Requires(postun):       /usr/sbin/groupdel
 URL:		http://www.jmcresearch.com/projects/jail/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -51,7 +52,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
         echo "Adding group jail GID=29."
-        /usr/sbin/groupadd -g 29 jail || exit 1
+        /usr/sbin/groupadd -g 29 jail
+
+%postun
+if [ "$1" = "0" ]; then
+        echo "Removing group jail."
+        %{_sbindir}/groupdel jail
+fi
 
 %files
 %defattr(644,root,root,755)
