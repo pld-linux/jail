@@ -53,7 +53,7 @@ rm -rf $RPM_BUILD_ROOT
 %pre
 if [ -n "`getgid jail`" ]; then
         if [ "`getgid jail`" != "35" ]; then
-                echo "Error: group named doesn't have gid=35. Correct this before installing bind." 1>&2
+                echo "Error: group jail doesn't have gid=35. Correct this before installing jail." 1>&2
                 exit 1
         fi
 else
