@@ -1,0 +1,133 @@
+--- jail/bin/addjailsw.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/bin/addjailsw	2004-05-15 17:24:20.794360176 +0200
+@@ -32,7 +32,7 @@
+ # insert fullpath here so the modules can be fully loaded
+ #
+ 
+-use lib '__INSTALLDIR__/lib';
++use lib '__INSTALLDIR__/lib/jail';
+ 
+ use libjail;
+ 
+--- jail/bin/addjailuser.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/bin/addjailuser	2004-05-15 17:24:41.555204048 +0200
+@@ -33,7 +33,7 @@
+ # insert fullpath here so the modules can be fully loaded
+ #
+ 
+-use lib '__INSTALLDIR__/lib';
++use lib '__INSTALLDIR__/lib/jail';
+ 
+ use libjail;
+ 
+--- jail/bin/mkjailenv.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/bin/mkjailenv	2004-05-15 17:24:51.789648176 +0200
+@@ -33,7 +33,7 @@
+ # insert fullpath here so the modules can be fully loaded
+ #
+ 
+-use lib '__INSTALLDIR__/lib';
++use lib '__INSTALLDIR__/lib/jail';
+ 
+ use libjail;
+ 
+--- jail/lib/libjail.pm.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/lib/libjail.pm	2004-05-15 18:03:24.620044512 +0200
+@@ -16,7 +16,7 @@
+ #
+ # -----------------------------------------------------------------------------
+ 
+-$JAIL_DIR= "__INSTALLDIR__/etc";
++$JAIL_DIR= "__INSTALLDIR__";
+ $CONFIG_FILE=$JAIL_DIR."/"."jail.conf";
+ 
+ # -----------------------------------------------------------------------------
+@@ -85,11 +85,11 @@
+ #
+ # -----------------------------------------------------------------------------
+ 
+-$definitions = load_file($INSTALL_DIR."/lib/arch/generic/definitions");
+-$functions = load_file($INSTALL_DIR."/lib/arch/generic/functions");
++$definitions = load_file($INSTALL_DIR."/lib/jail/arch/generic/definitions");
++$functions = load_file($INSTALL_DIR."/lib/jail/arch/generic/functions");
+ 
+-$DEBUG && print("Definition file: $INSTALL_DIR/lib/arch/generic/definitions\n");
+-$DEBUG && print("Function file: $INSTALL_DIR/lib/arch/generic/functions\n");
++$DEBUG && print("Definition file: $INSTALL_DIR/lib/jail/arch/generic/definitions\n");
++$DEBUG && print("Function file: $INSTALL_DIR/lib/jail/arch/generic/functions\n");
+ 
+ 
+ if (!$definitions) {
+@@ -107,7 +107,7 @@
+ undef $functions;
+ 
+ $ARCH_NAME = initial_load($ARCH);
+-$arch_dir = $INSTALL_DIR."/lib/arch/".$ARCH_NAME;
++$arch_dir = $INSTALL_DIR."/lib/jail/arch/".$ARCH_NAME;
+ 
+ $DEBUG && print("Arch directory is: \"$arch_dir\".\n");
+ 
+--- jail/install.sh.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/install.sh	2004-05-15 17:56:33.039614248 +0200
+@@ -34,7 +34,7 @@
+ 
+ filename=$1
+ fname=`basename $filename`
+-dest=$2
++dest=${DESTDIR}$2
+ perm=$3
+ own=$4
+ grp=$5
+@@ -74,7 +74,7 @@
+ parse_tag /tmp/jail.conf.tmp __INSTALLDIR__ $4
+ 
+ mv /tmp/jail.conf.tmp /tmp/jail.conf
+-install_file /tmp/jail.conf $4/etc $5 $6 $7
++install_file /tmp/jail.conf ${SYSCONFDIR} $5 $6 $7
+ rm /tmp/jail.conf
+ 
+ }
+@@ -85,10 +85,11 @@
+ 
+ cp lib/libjail.pm /tmp/libjail.pm.tmp
+ 
+-parse_tag /tmp/libjail.pm.tmp __INSTALLDIR__ $1
++parse_tag /tmp/libjail.pm.tmp __INSTALLDIR__ ${SYSCONFDIR}
++
+ 
+ mv /tmp/libjail.pm.tmp /tmp/libjail.pm
+-install_file /tmp/libjail.pm $1/lib $2 $3 $4
++install_file /tmp/libjail.pm $1/lib/jail $2 $3 $4
+ rm /tmp/libjail.pm
+ 
+ }
+@@ -143,10 +144,10 @@
+ 
+ gen_arch() {
+ 
+-for i in generic linux freebsd irix solaris; do
++for i in generic linux; do
+ 
+-install_file lib/arch/$i/definitions $1/lib/arch/$i $2 $3 $4
+-install_file lib/arch/$i/functions $1/lib/arch/$i $2 $3 $4
++install_file lib/arch/$i/definitions $1/lib/jail/arch/$i $2 $3 $4
++install_file lib/arch/$i/functions $1/lib/jail/arch/$i $2 $3 $4
+ 
+ done
+ 
+--- jail/src/Makefile.orig	2004-01-01 19:26:10.000000000 +0100
++++ jail/src/Makefile	2004-05-15 16:58:01.644427456 +0200
+@@ -28,10 +28,10 @@
+ #ARCH=__SOLARIS__
+ 
+ DEBUG = 0
+-INSTALL_DIR = /usr/local
++INSTALL_DIR = $(PREFIX)
+ PERL = /usr/bin/perl
+-ROOTUSER = root
+-ROOTGROUP = root
++ROOTUSER = $(USER)
++ROOTGROUP = `id -gn`
+ 
+ # ----------------------------------------------------------------------
+ #
