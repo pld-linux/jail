@@ -8,10 +8,12 @@ Group:		Applications/Communications
 Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.tar.gz
 # Source0-md5:	06824a1255ce3da1bb86cb806bf15535
 Patch0:		%{name}-install.patch
+URL:		http://www.jmcresearch.com/projects/jail/
+BuildRequires:	rpmbuild(macros) >= 1.159
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(postun):	/usr/sbin/groupdel
-URL:		http://www.jmcresearch.com/projects/jail/
+Provides:	group(jail)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,20 +54,19 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid jail`" ]; then
-	if [ "`getgid jail`" != "35" ]; then
+if [ -n "`/usr/bin/getgid jail`" ]; then
+	if [ "`/usr/bin/getgid jail`" != 35 ]; then
 		echo "Error: group jail doesn't have gid=35. Correct this before installing jail." 1>&2
 		exit 1
 	fi
 else
 	echo "Adding group jail GID=35."
-	/usr/sbin/groupadd -g 35 jail
+	/usr/sbin/groupadd -g 35 jail 1>&2
 fi
 
 %postun
 if [ "$1" = "0" ]; then
-	echo "Removing group jail."
-	/usr/sbin/groupdel jail
+	%groupremove jail
 fi
 
 %files
