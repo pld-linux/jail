@@ -73,5 +73,5 @@ fi
 %doc CHANGELOG README TODO
 %attr(755,root,root) %{_bindir}/[!j]*
 %attr(4750,root,jail) %{_bindir}/jail
-%{_libdir}/jail
+%{_prefix}/lib/jail
 %attr(640,root,root) %verify(not size md5 mtime) %config(noreplace) %{_sysconfdir}/jail.conf
