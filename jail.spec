@@ -9,7 +9,7 @@ Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.
 # Source0-md5:	06824a1255ce3da1bb86cb806bf15535
 Patch0:		%{name}-install.patch
 URL:		http://www.jmcresearch.com/projects/jail/
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.202
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(postun):	/usr/sbin/groupdel
@@ -21,7 +21,7 @@ Jail Chroot Project is an attempt of write a tool that builds a
 chrooted environment. The main goal of Jail is to be as simple as
 possible, and highly portable. The most difficult step when building a
 chrooted environment is to set up the right libraries and files. Here,
-Jail comes to the rescue with a tool to automagically configures &
+Jail comes to the rescue with a tool to automagically configures and
 builds all the required files, directories and libraries.
 
 %description -l pl
@@ -54,15 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid jail`" ]; then
-	if [ "`/usr/bin/getgid jail`" != 35 ]; then
-		echo "Error: group jail doesn't have gid=35. Correct this before installing jail." 1>&2
-		exit 1
-	fi
-else
-	echo "Adding group jail GID=35."
-	/usr/sbin/groupadd -g 35 jail 1>&2
-fi
+%groupadd -g 35 jail
 
 %postun
 if [ "$1" = "0" ]; then
