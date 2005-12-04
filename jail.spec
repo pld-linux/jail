@@ -67,4 +67,4 @@ fi
 %attr(755,root,root) %{_bindir}/[!j]*
 %attr(4750,root,jail) %{_bindir}/jail
 %{_prefix}/lib/jail
-%attr(640,root,root) %verify(not size md5 mtime) %config(noreplace) %{_sysconfdir}/jail.conf
+%attr(640,root,root) %verify(not md5 mtime size) %config(noreplace) %{_sysconfdir}/jail.conf
