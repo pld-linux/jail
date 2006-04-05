@@ -13,6 +13,7 @@ BuildRequires:	rpmbuild(macros) >= 1.202
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(postun):	/usr/sbin/groupdel
+Requires:	strace
 Provides:	group(jail)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
