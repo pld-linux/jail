@@ -2,7 +2,7 @@ Summary:	Tool that builds a chrooted environment
 Summary(pl):	Narzêdzie tworz±ce ¶rodowisko w chroocie
 Name:		jail
 Version:	1.9a
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Communications
 Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.tar.gz
