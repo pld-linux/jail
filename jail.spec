@@ -2,7 +2,7 @@ Summary:	Tool that builds a chrooted environment
 Summary(pl):	Narzêdzie tworz±ce ¶rodowisko w chroocie
 Name:		jail
 Version:	1.9a
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Communications
 Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.tar.gz
@@ -10,9 +10,9 @@ Source0:	http://www.jmcresearch.com/static/dwn/projects/jail/%{name}_%{version}.
 Patch0:		%{name}-install.patch
 URL:		http://www.jmcresearch.com/projects/jail/
 BuildRequires:	rpmbuild(macros) >= 1.202
+Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
-Requires(postun):	/usr/sbin/groupdel
 Requires:	strace
 Provides:	group(jail)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
