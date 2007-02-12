@@ -1,5 +1,5 @@
 Summary:	Tool that builds a chrooted environment
-Summary(pl):	Narzêdzie tworz±ce ¶rodowisko w chroocie
+Summary(pl.UTF-8):   NarzÄ™dzie tworzÄ…ce Å›rodowisko w chroocie
 Name:		jail
 Version:	1.9a
 Release:	3
@@ -25,13 +25,13 @@ chrooted environment is to set up the right libraries and files. Here,
 Jail comes to the rescue with a tool to automagically configures and
 builds all the required files, directories and libraries.
 
-%description -l pl
-Jail Chroot Project to próba napisania narzêdzia tworz±cego ¶rodowisko
-w chroocie. G³ównym celem Jaila jest bycie tak prostym jak to tylko
-mo¿liwe, a przy tym bardzo przeno¶nym. Najtrudniejszym krokiem przy
-tworzeniu ¶rodowiska w chroocie jest w³a¶ciwe dobranie bibliotek i
-plików. Tutaj z pomoc± przychodzi Jail z narzêdziem automatycznie
-konfiguruj±cym i tworz±cym wszystkie wymagane pliki, katalogi i
+%description -l pl.UTF-8
+Jail Chroot Project to prÃ³ba napisania narzÄ™dzia tworzÄ…cego Å›rodowisko
+w chroocie. GÅ‚Ã³wnym celem Jaila jest bycie tak prostym jak to tylko
+moÅ¼liwe, a przy tym bardzo przenoÅ›nym. Najtrudniejszym krokiem przy
+tworzeniu Å›rodowiska w chroocie jest wÅ‚aÅ›ciwe dobranie bibliotek i
+plikÃ³w. Tutaj z pomocÄ… przychodzi Jail z narzÄ™dziem automatycznie
+konfigurujÄ…cym i tworzÄ…cym wszystkie wymagane pliki, katalogi i
 biblioteki.
 
 %prep
