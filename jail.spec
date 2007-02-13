@@ -1,5 +1,5 @@
 Summary:	Tool that builds a chrooted environment
-Summary(pl.UTF-8):   Narzędzie tworzące środowisko w chroocie
+Summary(pl.UTF-8):	Narzędzie tworzące środowisko w chroocie
 Name:		jail
 Version:	1.9a
 Release:	3
